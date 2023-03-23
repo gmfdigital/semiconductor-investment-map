@@ -1,0 +1,436 @@
+/*@font-face {
+  src: url('fonts/Metropolis/Fonts/Webfonts/WOFF/Metropolis-Medium.woff') format("woff"),
+       url('fonts/Metropolis/Fonts/Webfonts/WOFF/Metropolis-Bold.woff') format("woff"),
+       url('fonts/Metropolis/Fonts/Webfonts/WOFF/Metropolis-Thin.woff') format("woff");
+  font-family: 'Metropolis';
+  font-style: normal;
+  font-weight: bold;
+}*/
+
+@font-face {
+  src: url('fonts/RoslindaleVariable-VF[DisplayCondensed]-Testing.woff2') format("woff2"),
+       url('fonts/RoslindaleVariable-VF[DisplayCondensed]-Testing.woff') format("woff");
+  font-family: 'Roslindale Variable';
+  font-style: normal;
+  font-weight: bold;
+}
+
+font-face {
+  src: url('fonts/Roslindale-DisplayCondensedRegular-Testing.woff2') format("woff2"),
+       url('fonts/Roslindale-DisplayCondensedRegular-Testing.woff') format("woff");
+  font-family: 'Roslindale';
+  font-style: normal;
+  font-weight: normal;
+}
+
+:root{
+    --theme-red: rgb(169 38 49);
+    --theme-blue: rgb(23 60 79);
+    --theme-beige: rgb(247 240 233);
+    --theme-grey: rgb(128 128 128);
+    --header-font: "Roslindale Variable", "Adobe Garamond Pro", Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+    --theme-sans-serif:  "Open Sans", "Arial Unicode MS Bold", "Helvetica", sans-serif;
+}
+
+html{
+  box-sizing: border-box;
+}
+
+body { 
+  font-family: var(--header-font);
+  margin: 0; 
+  padding: 0; 
+}
+
+#map { 
+  position: absolute; 
+  top: 0; 
+  bottom: 0; 
+  width: 100%; 
+}
+
+.mapbox-improve-map {
+  display: none;
+}
+
+
+.continent-toggle-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    padding: 0px;
+    background: rgb(249 249 249 / 74%);
+    backdrop-filter: blur(4px);
+    border-radius: 100px;
+    box-shadow: 0 0 10px 2px rgb(0 0 0 / 10%);
+    height: max-content;  
+}
+
+.top-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 0;
+}
+
+.top-bar *, .title-container *{
+  pointer-events: auto;
+}
+
+.continent-toggle {
+  color: rgb(0 0 0 / 40%);
+  cursor: pointer;
+  margin: 0;
+}
+
+.continent-toggle:hover {
+  color: rgb(169 38 49 / 80%);
+  text-decoration: underline;
+}
+
+.continent-toggle#united-states {
+    padding: .5em .75em .5em 1em;
+}
+.continent-toggle#europe {
+    padding: .5em 1em .5em .75em;
+}
+
+.continent-toggle.active {
+  color: var(--theme-red);
+  background: white;
+}
+
+header {
+  pointer-events: none;
+  padding: 1em;
+  position: absolute;
+  z-index: 10000;
+}
+
+.main {
+  z-index: 100;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+/*  box-shadow: 0 0 10px 2px rgb(0 0 0 / 10%);*/
+  width: 50%;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.content-container{
+  box-sizing: border-box;
+  position: relative;
+/*  border: solid black 2px;*/
+  width: 100%;
+  height: 100%;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-right: 100px;
+  padding-left: 100px;
+}
+
+.content-container.popup-container{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+
+.content-container .popup{
+  pointer-events: auto !important;
+  z-index: 1000;
+  width: 100%;
+  max-width: 450px;
+  background: rgb(249 249 249 / 90%);
+  box-shadow: 0 0 10px 2px rgb(0 0 0 / 20%);
+  backdrop-filter: blur(4px);
+}
+
+.popup{
+  font-family: var(--theme-sans-serif);
+  padding: 1em;
+  border-radius: 4px;
+}
+
+.title-container{
+  position: relative;
+  display: inline-flex;
+  gap: 1em;
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.title{
+  display: inline-block;
+  margin: 0;
+}
+
+.about-this-project-container{
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: auto;
+}
+
+.about-this-project {
+  width:25px;
+  height: 25px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 100px;
+  overflow: hidden;
+  background-color: var(--theme-blue);
+  box-shadow: 0 0 10px 2px rgb(0 0 0 / 10%);
+}
+
+h1 {
+  line-height: 1;
+  margin-bottom: 0.3em; 
+  font-family: var(--header-font);
+  font-size: clamp(40px, 6vmin, 60px);
+  color: var(--theme-blue);
+}
+
+h2 {
+  line-height: 1;
+  font-family: var(--header-font);
+  font-size: clamp(30px, 3.5vmin, 48px);
+}
+
+h3 {
+  line-height: 1;
+  font-family: var(--header-font);
+  font-size: clamp(20px, 2.7vmin, 24px);
+}
+
+h4 {
+  line-height: 1.3;
+  font-family: var(--theme-sans-serif);
+  font-size: clamp(20px, 2vmin, 24px);
+}
+
+h5 {
+  line-height: 1.3;
+  font-weight: 600;
+  font-family: var(--theme-sans-serif);
+  font-size: clamp(14px, 2vmin, 18px);
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: underline;
+  filter: brightness(70%);
+}
+
+.footnote {
+  font-size: 12px;
+}
+
+
+
+/*****************************/
+/*********** POPUP ***********/
+
+.mapboxgl-popup-content {
+  position: relative;
+  min-width: 100px;
+  width: auto;
+  max-width: 200px;
+  border-radius: 3px;
+  padding: 4px;
+  pointer-events: auto;
+}
+
+.preview .mapboxgl-popup-content{
+  background: rgb(249 249 249 / 80%);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 10px 2px rgb(0 0 0 / 10%);
+}
+
+.preview .mapboxgl-popup-tip {
+  border-top-color: rgb(249 249 249 / 90%);
+/*  backdrop-filter: blur(4px);*/
+  box-shadow: 0px 10px 20px -20px rgb(0 0 0 / 10%);
+}
+
+
+.feature p {
+  font-family: var(--theme-sans-serif);
+  font-weight: 600;
+  margin: 0;
+}
+
+.popup-header .title{
+  display: block;
+  margin-top: 24px;
+/*  padding-bottom: 16px;*/
+  margin-bottom: 16px;
+/*  border-bottom: white solid 8px;*/
+}
+
+.popup-header .title .firm{
+  color: var(--theme-red);
+  margin-top: 0px;
+  margin-bottom: 8px;
+}
+.popup-header .title .event{
+  color: var(--theme-red);
+/*  font-style: italic;*/
+  margin-top: 8px;
+  margin-bottom: 0px;
+}
+
+.stat-section.supplied {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0em 1em; /* no row gap */
+}
+
+.stat-container.supplied {
+  flex-basis: auto;
+  min-width: 33.33%;
+/*  flex-grow: 1;*/
+}
+
+.stat-container.hide, .stat-container .footnote.false {
+  display: none;
+}
+
+.stat {
+    margin: 0;
+    padding: 4px 12px 4px 12px;
+    background: white;
+    display: inline-block;
+    /* border: #e5e5e5 1px solid; */
+    border-radius: 16px;
+/*    color: white;*/
+    color: var(--theme-beige);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.stat {
+    background-color: var(--theme-red);
+}
+
+.jobs .stat {
+  background-color: var(--theme-blue);
+}
+
+.meta-bar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.meta-bar p {
+  margin: 0;
+  color: var(--theme-red);
+  letter-spacing: .5px;
+  font-size: 11px;
+}
+
+.meta-bar .meta-box {
+  font-family: var(--theme-sans-serif);
+  font-size: 12px;
+  background: white;
+  padding: 2px 8px 2px 8px;
+  border-radius: 100px;
+  border: solid 1px #e7e7e7;
+} 
+
+.location-meta {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.location-meta .country-flag {
+  height: 9px;
+  width: 15px;
+  background-color: #e7e7e7;
+  margin-top: 4px;
+}
+
+.label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--theme-grey);  
+  padding-bottom: 2px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--theme-grey);
+}
+
+.sources ol {
+  padding-left: 12px;
+  margin-top: 0px;
+}
+
+li.source {
+  font-size: 12px;
+  color: var(--theme-grey);
+  font-weight: default;  
+}
+
+.source a{
+  margin-left: 8px;
+  display: block;
+  font-size: 12px;
+  color: var(--theme-red);  
+  font-weight: 600;
+}
+
+
+/*************************************/
+/*********** MEDIA QUERIES ***********/
+
+@media only screen and (max-width: 900px) {
+
+  .content-container.popup-container {
+    padding: 48px;
+  }
+
+}
+
+
+@media only screen and (max-width: 650px) {
+
+  h1 {
+    font-size: 28px;
+  }
+
+  h3{
+    font-size: 18px;
+  }
+
+  .title-container {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .main {
+    z-index: 100;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40vh;
+    pointer-events: none;
+  }
+
+  .content-container {
+    padding: 0;
+  }
+
+  .content-container .popup {
+    overflow: scroll;
+  }
+
+  .geocoder {
+    display: none;
+  }
+}
