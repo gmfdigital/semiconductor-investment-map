@@ -42,6 +42,20 @@
   	</header>
   	<div class='main'></div>
     <div id='map'></div>
+    
+
+		<div id="legend" class="legend">
+			<h4>Investment Categories</h4>
+			<div class="category-container">
+					<div><span style="background-color: #723122"></span>New Investment Announced</div>
+					<div><span style="background-color: #8b4225"></span>Broke New Ground</div>
+					<div><span style="background-color: #a25626"></span>Facility Opened</div>
+					<div><span style="background-color: #b86b25"></span>5,000,000</div>
+			</div>
+		</div>
+
+
+
     <script>
     // The value for 'accessToken' begins with 'pk...'
     // https://docs.mapbox.com/accounts/guides/tokens/#default-public-access-token
@@ -150,18 +164,13 @@
 				'circle-stroke-opacity': 0,
 				// 'circle-color': '#A92631',
 				// Color circles by ethnicity, using a `match` expression.
-				'circle-color': [
-					'match',
-					['get', 'type'],
-						'Chip',
-						'#fbb03b',
-						'Supply Chain',
-						'#223b53',
-						'Hispanic',
-						'#e55e5e',
-						'Asian',
-						'#3bb2d0',
-						/* other */ '#A92631'
+				'circle-color': [				  "match",
+					  ["get", "category"],
+					  ["New Investment Announced"], "hsl(223, 83%, 54%)",
+					  ["Facility Opened"], "hsl(0, 58%, 56%)",
+					  ["Considering New Investment/Expansion"], "hsl(42, 79%, 60%)",
+					  ["Broke Ground"],"hsl(298, 85%, 57%)",
+					  "#000000"
 				],
 				'circle-stroke-color': 'white'
 			}

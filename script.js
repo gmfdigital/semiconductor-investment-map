@@ -244,6 +244,22 @@ function createSelectedPopup(f) { // create popup
 
 
 //////////////////////////////////
+//      CREATE CATEGORIES       //
+
+// function createCategories() {
+// 	map.on('load', () => {
+// 		const styleJson = map.getStyle();
+// 		const semiconductorsStyle = map.getLayer('semiconductors-id').paint;
+// 		console.log(styleJson);
+// 	});
+
+// }
+
+// createCategories();
+
+
+
+//////////////////////////////////
 // SEMICONDUCTOR LAYER BEHAVIOR //
 
 
