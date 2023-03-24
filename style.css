@@ -231,6 +231,10 @@ a:hover{
   font-size: 12px;
 }
 
+.legend-entry {
+  font-size: 12px;
+}
+
 
 
 /*****************************/
@@ -240,11 +244,9 @@ a:hover{
   background: rgb(249 249 249 / 80%);
   backdrop-filter: blur(4px);
   box-shadow: 0 0 10px 2px rgb(0 0 0 / 10%);
-
-
   border-radius: 3px;
   bottom: 40px;
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: var(--theme-sans-serif);
   padding: 18px;
   position: absolute;
   left: 18px;
@@ -258,9 +260,9 @@ a:hover{
 .legend div span {
   border-radius: 50%;
   display: inline-block;
-  height: 10px;
+  height: 11px;
   margin-right: 5px;
-  width: 10px;
+  width: 11px;
 }
 
 

@@ -3,7 +3,11 @@ var unitedStatesToggle = document.querySelector("#united-states");
 var europeToggle = document.querySelector("#europe");
 var USAbbox = [[-125, 51], [-68,20 ]];
 var EUbbox = [[-12, 61], [44,30 ]];
+var legend = document.querySelector(".legend"); 
+var categoryContainer = document.querySelector(".category-container"); 
+
 map.changingContinent = false;
+
 
 unitedStatesToggle.addEventListener("click", function(){
 	toggleClass(unitedStatesToggle, europeToggle, "clicked");
@@ -370,6 +374,19 @@ map.on('mouseleave', 'clusters-circle-id', (event) => {
 //////////////////////////////////
 //////////////////////////////////
 
+map.on('load', () => {
+	settings.mapSettings.categories.forEach(category => {
+		var legendEntry = Object.assign(document.createElement('div'), { 
+			innerHTML: `<span style="background-color:${(category.color)}"></span>${(category.label)}`,
+			className: 'legend-entry' 
+		});
+		categoryContainer.appendChild(legendEntry);
+	})
+	categoryContainer.appendChild(Object.assign(document.createElement('div'), { 
+			innerHTML: `<span style="background-color: hsl(42, 0%, 60%)"></span>Other`,
+			className: 'legend-entry' 
+		}));
+})
 
 map.on('move', () => { 
 	checkContinent();

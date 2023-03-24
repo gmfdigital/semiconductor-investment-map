@@ -23,6 +23,9 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
 
+		<!-- Settings JSON -->
+		<script type="text/javascript" src="settings.json"></script>
+
 		<!-- Stylesheet -->
 		<link rel="stylesheet" type="text/css" href="style.css" />
 
@@ -43,25 +46,26 @@
   	</header>
   	<div class='main'></div>
     <div id='map'></div>
+
+	<div id="legend" class="legend">
+		<p class="label">SEMICONDUCTOR INVESTMENTS</p>
+		<div class="category-container"></div>
+	</div>
+
     <script>
-
-
-
-
-
-function parseUrl(url) {
-    const urlRe = /^(\w+):\/\/([^/?]*)(\/[^?]+)?\??(.+)?/;
-    const parts = url.match(urlRe);
-    if (!parts) {
-        throw new Error('Unable to parse URL object');
-    }
-    return {
-        protocol: parts[1],
-        authority: parts[2],
-        path: parts[3] || '/',
-        params: parts[4] ? parts[4].split('&') : []
-    };
-}
+	function parseUrl(url) {
+	    const urlRe = /^(\w+):\/\/([^/?]*)(\/[^?]+)?\??(.+)?/;
+	    const parts = url.match(urlRe);
+	    if (!parts) {
+	        throw new Error('Unable to parse URL object');
+	    }
+	    return {
+	        protocol: parts[1],
+	        authority: parts[2],
+	        path: parts[3] || '/',
+	        params: parts[4] ? parts[4].split('&') : []
+	    };
+	}
 
 
     // The value for 'accessToken' begins with 'pk...'
@@ -152,7 +156,7 @@ function parseUrl(url) {
 			map.addSource('semiconductors', {
 			type: 'geojson',
 			// Use a URL for the value for the `data` property.
-			data: 'https://api.mapbox.com/datasets/v1/erannestad/cldcty6es2m1i26qg1c2k688v/features?access_token=pk.eyJ1IjoiZXJhbm5lc3RhZCIsImEiOiJjamp4dHp3N2ExaHp1M3FycnJsamZ4cGpuIn0.Z3DvBItGT21xpbhnIbJLBg',
+			data: 'https://api.mapbox.com/datasets/v1/gmfdigital/clfkazscv2lsb2aqh6j1qdlpm/features?access_token=pk.eyJ1IjoiZ21mZGlnaXRhbCIsImEiOiJjbGZrN21nYm4wODcxNDFuejh2ZTlicWhlIn0.MpmGWQOJ15s5u9-MY7zIUg',
       'generateId': true, //This ensures that all features have unique IDs           
 			// 'cluster': true,
 			// 'clusterRadius' : 16
@@ -195,7 +199,22 @@ function parseUrl(url) {
 				}
 			});
 			 
-			 
+			var mapCategories = settings.mapSettings.categories;
+			function createColors() {
+				var allCats = []
+				for (var i=0; i < mapCategories.length; i++) {
+					var temp = [[mapCategories[i].categoryField], mapCategories[i].color]
+					allCats.push(temp)
+				}				
+				var legend = ["match",
+					  ["get", "category"],
+				]
+				allCats.forEach(c => legend.push(c[0], c[1]));
+				legend.push('hsl(42, 0%, 60%)');
+			return legend;
+			}
+
+
 			map.addLayer({
 			'id': 'semiconductors-id',
 			'type': 'circle',
@@ -213,7 +232,7 @@ function parseUrl(url) {
 	    	'circle-stroke-color': '#000',
 				'circle-stroke-width': 8,
 				'circle-stroke-opacity': 0,
-				'circle-color': '#A92631',
+				'circle-color': createColors(),
 				'circle-stroke-color': 'white'
 			}
 			});

@@ -3,6 +3,8 @@ var unitedStatesToggle = document.querySelector("#united-states");
 var europeToggle = document.querySelector("#europe");
 var USAbbox = [[-125, 51], [-68,20 ]];
 var EUbbox = [[-12, 61], [44,30 ]];
+var legend = document.querySelector(".legend"); //LIBRE
+var categoryContainer = document.querySelector(".category-container"); //LIBRE
 map.changingContinent = false;
 
 unitedStatesToggle.addEventListener("click", function(){
@@ -125,7 +127,7 @@ function fullPopup(f, task) {
 		    						${(f.properties.date) ? '<p>' + f.properties.date + '</p>': `` }
 		    				</div>
 		    				<div class="meta-box location-meta">
-			    					<img class="country-flag" crossorigin="anonymous" src="${getFlagURL(f.properties.country)}"> ${(f.properties.location) ? '<p>' + f.properties.location + '</p>': `` }
+			    					<img class="country-flag" crossorigin="anonymous" src="${getFlagURL(f.properties['country-code'])}"> ${(f.properties.location) ? '<p>' + f.properties.location + '</p>': `` }
 		    				</div>
 		    	 		</div>
 		    	 		<div class="title">
@@ -134,44 +136,53 @@ function fullPopup(f, task) {
 		    	 		</div>
 		    	 	</div>
 		    	 	<div class="popup-body">
-		    	 		<section class="stat-section ${(f.properties.amount || f.properties['type of chip']) ? 'supplied' : ``}">
+		    	 		<section class="stat-section ${(f.properties.category) ? 'supplied' : ``}">
+		    	 			<div class="stat-container ${(f.properties.category) ? 'supplied' : `hide` }">
+			    	  		${(f.properties.category) ? 
+			    	  		'<p class="label">CATEGORY</p>' +
+		    	  			'<p class="stat">' + f.properties.category + '</p>'
+		    	  			: `` }
+			    	  	</div>
+		    	  	</section>
+		    	 		<section class="stat-section ${(f.properties.amount || f.properties['type']) ? 'supplied' : ``}">
 		    	 			<div class="stat-container ${(f.properties.amount) ? 'supplied' : `hide` }">
 			    	  		${(f.properties.amount) ? 
 			    	  		'<p class="label">INVESTMENT</p>' +
 		    	  			'<p class="stat">' + f.properties.amount + '</p>' +
-		    	  			'<p class="footnote ' + checkProperty(addProperty(f.properties['type-description'])) + '">' + addProperty(f.properties['amount-description']) + '</p>'
+		    	  			'<p class="footnote ' + checkProperty(addProperty(f.properties['amount-description'])) + '">' + addProperty(f.properties['amount-description']) + '</p>'
 		    	  			: `` }
 			    	  	</div>
-			    	  	<div class="stat-container ${(f.properties['type of chip']) ? 'supplied' : `hide`} ">
-			    				${(f.properties['type of chip']) ? 
+			    	  	<div class="stat-container ${(f.properties['type']) ? 'supplied' : `hide`} ">
+			    				${(f.properties['type']) ? 
 			    	  		'<p class="label">TYPE</p>' +
-			    				'<p class="stat">' + f.properties['type of chip'] + '</p>' +
+			    				'<p class="stat">' + f.properties['type'] + '</p>' +
 		    	  			'<p class="footnote ' + checkProperty(addProperty(f.properties['type-description'])) + '">' + addProperty(f.properties['type-description']) + '</p>'
 									: `` }
 			    			</div>
 			    		</section>
-		    	 		<section class="stat-section jobs ${(f.properties['direct jobs'] || f.properties['indirect jobs']) ? 'supplied' : ``}">
-		    	 			<div class="stat-container ${(f.properties['direct jobs']) ? 'supplied' : `hide` }">
-			    	  		${(f.properties['direct jobs']) ? 
+		    	 		<section class="stat-section jobs ${(f.properties['direct-jobs'] || f.properties['indirect-jobs']) ? 'supplied' : ``}">
+		    	 			<div class="stat-container ${(f.properties['direct-jobs']) ? 'supplied' : `hide` }">
+			    	  		${(f.properties['direct-jobs']) ? 
 			    	  		'<p class="label">DIRECT JOBS</p>' +
-		    	  			'<p class="stat">' + f.properties['direct jobs'] + '</p>' 
+		    	  			'<p class="stat">' + f.properties['direct-jobs'] + '</p>' 
 		    	  			: `` }
 			    	  	</div>
-			    	  	<div class="stat-container ${(f.properties['indirect jobs']) ? 'supplied' : `hide`} ">
-			    				${(f.properties['indirect jobs']) ? 
+			    	  	<div class="stat-container ${(f.properties['indirect-jobs']) ? 'supplied' : `hide`} ">
+			    				${(f.properties['indirect-jobs']) ? 
 			    	  		'<p class="label">INDIRECT JOBS</p>' +
-			    				'<p class="stat">' + f.properties['indirect jobs'] + '</p>' 
+			    				'<p class="stat">' + f.properties['indirect-jobs'] + '</p>' 
 									: `` }
 			    			</div>
 			    		</section>
 			    	</div>
 		    		<div class="popup-footer">
 		    			<div class="sources">
-	    							${(f.properties['source1 link'] || f.properties['source1 label'] || f.properties['source2 link'] || f.properties['source2 label'] || f.properties['source3 link'] || f.properties['source3 label'] || f.properties['source4 link'] || f.properties['source4 label']) ? '<p class="label">SOURCES</p>': ``}
+	    							${(f.properties['source1'] || f.properties['source1-label'] || f.properties['source2'] || f.properties['source2-label'] || f.properties['source3'] || f.properties['source3-label'] || f.properties['source4'] || f.properties['source4-abel']) ? '<p class="label">SOURCES</p>': ``}
 	    							<ol>
-		    							${(f.properties['source1 link'] || f.properties['source1 label']) ? '<li class="source" ><a href="' + f.properties['source1 link'] + '" target="_blank" >' + f.properties['source1 label'] + '</a></li>': ``}
-		    							${(f.properties['source2 link'] || f.properties['source2 label']) ? '<li class="source" ><a href="' + f.properties['source2 link'] + '" target="_blank" >' + f.properties['source2 label'] + '</a></li>': ``}
-		    							${(f.properties['source3 link'] || f.properties['source3 label']) ? '<li class="source" ><a href="' + f.properties['source3 link'] + '" target="_blank" >' + f.properties['source3 label'] + '</a></li>': ``}
+		    							${(f.properties['source1'] || f.properties['source1-label']) ? '<li class="source" ><a href="' + f.properties['source1'] + '" target="_blank" >' + f.properties['source1-label'] + '</a></li>': ``}
+		    							${(f.properties['source2'] || f.properties['source2-label']) ? '<li class="source" ><a href="' + f.properties['source2'] + '" target="_blank" >' + f.properties['source2-label'] + '</a></li>': ``}
+		    							${(f.properties['source3'] || f.properties['source3-label']) ? '<li class="source" ><a href="' + f.properties['source3'] + '" target="_blank" >' + f.properties['source3-label'] + '</a></li>': ``}
+		    							${(f.properties['source4'] || f.properties['source4-label']) ? '<li class="source" ><a href="' + f.properties['source4'] + '" target="_blank" >' + f.properties['source4-label'] + '</a></li>': ``}
 		    						</ol>
 		    			</div>
 		    		</div>`,
@@ -184,7 +195,8 @@ function fullPopup(f, task) {
 
 let addProperty = (prop) => (prop) ? prop : '';
 let checkProperty = (prop) => (prop) ? 'true' : 'false';
-let getFlagURL = (countryCode) => 'https://countryflagsapi.com/svg/' + countryCode.toLowerCase();
+// let getFlagURL = (countryCode) => 'https://countryflagsapi.com/svg/' + countryCode.toLowerCase();
+let getFlagURL = (countryCode) => 'https://flagcdn.com/' + countryCode.toLowerCase() + '.svg';  // flag codes: https://flagcdn.com/en/codes.json
 
 
 
@@ -341,6 +353,19 @@ map.on('mouseleave', 'clusters-circle-id', (event) => {
 //////////////////////////////////
 //////////////////////////////////
 
+map.on('load', () => {
+	settings.mapSettings.categories.forEach(category => {
+		var legendEntry = Object.assign(document.createElement('div'), { 
+			innerHTML: `<span style="background-color:${(category.color)}"></span>${(category.label)}`,
+			className: 'legend-entry' 
+		});
+		categoryContainer.appendChild(legendEntry);
+	})
+	categoryContainer.appendChild(Object.assign(document.createElement('div'), { 
+			innerHTML: `<span style="background-color: hsl(42, 0%, 60%)"></span>Other`,
+			className: 'legend-entry' 
+		}));
+})
 
 map.on('move', () => { 
 	checkContinent();

@@ -21,6 +21,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+		
+		<!-- Settings JSON -->
+		<script type="text/javascript" src="settings.json"></script>
 
 		<!-- Stylesheet -->
 		<link rel="stylesheet" type="text/css" href="style.css" />
@@ -45,18 +48,16 @@
     
 
 		<div id="legend" class="legend">
-			<h4>Investment Categories</h4>
-			<div class="category-container">
-					<div><span style="background-color: #723122"></span>New Investment Announced</div>
-					<div><span style="background-color: #8b4225"></span>Broke New Ground</div>
-					<div><span style="background-color: #a25626"></span>Facility Opened</div>
-					<div><span style="background-color: #b86b25"></span>5,000,000</div>
-			</div>
+			<p class="label">SEMICONDUCTOR INVESTMENTS</p>
+			<div class="category-container"></div>
 		</div>
 
 
 
     <script>
+    // Log the map settings
+    console.log(settings);
+
     // The value for 'accessToken' begins with 'pk...'
     // https://docs.mapbox.com/accounts/guides/tokens/#default-public-access-token
     // https://docs.mapbox.com/accounts/guides/tokens/#url-restrictions
@@ -140,7 +141,21 @@
 				}
 			});
 			 
-			 
+			var mapCategories = settings.mapSettings.categories;
+			function createColors() {
+				var allCats = []
+				for (var i=0; i < mapCategories.length; i++) {
+					var temp = [[mapCategories[i].categoryField], mapCategories[i].color]
+					allCats.push(temp)
+				}				
+				var legend = ["match",
+					  ["get", "category"],
+				]
+				allCats.forEach(c => legend.push(c[0], c[1]));
+				legend.push('hsl(42, 0%, 60%)');
+			return legend;
+			}
+
 			map.addLayer({
 			'id': 'semiconductors-id',
 			'type': 'circle',
@@ -164,18 +179,16 @@
 				'circle-stroke-opacity': 0,
 				// 'circle-color': '#A92631',
 				// Color circles by ethnicity, using a `match` expression.
-				'circle-color': [				  "match",
-					  ["get", "category"],
-					  ["New Investment Announced"], "hsl(223, 83%, 54%)",
-					  ["Facility Opened"], "hsl(0, 58%, 56%)",
-					  ["Considering New Investment/Expansion"], "hsl(42, 79%, 60%)",
-					  ["Broke Ground"],"hsl(298, 85%, 57%)",
-					  "#000000"
-				],
+				'circle-color': createColors(),
 				'circle-stroke-color': 'white'
 			}
 			});
 		});	
+
+		map.on('load', () => {
+			const styleJson = map.getStyle();
+			console.log(styleJson);
+		});
 
     </script>
 

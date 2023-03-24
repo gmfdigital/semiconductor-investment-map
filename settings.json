@@ -1,0 +1,26 @@
+var settings = {
+	"mapSettings" : {
+		"categories": [
+			{
+				"categoryField": "New Investment Announced",
+				"label": "New Investment Announced",
+				"color": "hsl(223, 83%, 54%)"
+			},
+			{
+				"categoryField": "Broke Ground",
+				"label": "Broke Ground",
+				"color": "hsl(298, 85%, 57%)"
+			},
+			{
+				"categoryField": "Facility Opened",
+				"label": "Facility Opened",
+				"color": "hsl(0, 58%, 56%)"
+			},
+			{
+				"categoryField": "Considering New Investment/Expansion",
+				"label": "Considering New Investment/Expansion",
+				"color": "hsl(42, 79%, 60%)"
+			}
+		]
+	}
+}
