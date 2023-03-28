@@ -3,7 +3,7 @@ var settings = {
 		"categories": [
 			{
 				"categoryField": "New Investment Announced",
-				"label": "New Investment",
+				"label": "New Investment Announced",
 				"color": "hsl(223, 83%, 54%)"
 			},
 			{
