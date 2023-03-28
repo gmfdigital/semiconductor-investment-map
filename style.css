@@ -228,7 +228,9 @@ a:hover{
 }
 
 .footnote {
-  font-size: 12px;
+    margin-top: 4px;
+    font-size: 12px;
+    font-style: italic;
 }
 
 .legend-entry {
@@ -426,6 +428,10 @@ li.source {
 
   .content-container.popup-container {
     padding: 48px;
+  }
+
+  .popup {
+    margin: auto;
   }
 
 }
