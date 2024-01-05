@@ -17,6 +17,11 @@ var settings = {
 				"color": "hsl(0, 58%, 56%)"
 			},
 			{
+				"categoryField": "Government Investment Announced",
+				"label": "Government Investment Announced",
+				"color": "hsl(170, 97%, 40%)"
+			},
+			{
 				"categoryField": "Considering New Investment/Expansion",
 				"label": "Considering New Investment/Expansion",
 				"color": "hsl(42, 79%, 60%)"
