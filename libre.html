@@ -237,7 +237,31 @@
 			}
 			});
 		});	
-
+	    map.addLayer({
+    id: 'country-boundaries',
+    type: 'fill',
+    source: 'composite',
+    'source-layer': 'country_boundaries',
+    paint: {
+      'fill-color': [
+        'case',
+        ['boolean', ['feature-state', 'hasData'], false],
+        '#5C9EA6',
+        'hsl(20, 8%, 92%)'
+      ]
+    }
+  });
+ map.on('sourcedata', function() {
+    const features = map.querySourceFeatures('your-dataset');
+    features.forEach(function(feature) {
+      const countryCode = feature.properties.iso_3166_1_alpha_3;
+      map.setFeatureState(
+        { source: 'composite', sourceLayer: 'country_boundaries', id: countryCode },
+        { hasData: true }
+      );
+    });
+  });
+});
     </script>
 
 		<script type="text/javascript" src="libre.js"></script>
